@@ -34,8 +34,10 @@ class Weather(db.Model):
 
 @app.route('/')
 def main():
-        query = Weather.query.all() 
-        return jsonify(json_list = [row.serialize for row in query])
+  start_date = request.args.get('start_date')
+  end_date = request.args.get('end_date')
+  query = Weather.query.all() 
+  return jsonify(json_list = [row.serialize for row in query])
 
 if __name__ == '__main__':
-        app.run(host='0.0.0.0')
+  app.run(host='0.0.0.0')
