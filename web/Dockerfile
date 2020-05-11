@@ -1,7 +1,6 @@
-FROM python:3.7-alpine
+FROM python:3.7
 
-WORKDIR /web
+COPY . ./
 
-COPY app.py /web
-RUN pip install flask
+RUN pip install -r requirements
 CMD ["python", "app.py"]
