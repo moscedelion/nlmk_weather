@@ -18,7 +18,14 @@ services:
     build: ./web
     ports:
       - 80:5000
-  
+    environment:
+      - DB_PORT=5432
+      - DB_VENDOR=postgres
+      - DATABASE_LOCATION=database
+      - POSTGRES_DB=nlmk
+      - POSTGRES_USER=nlmk
+      - POSTGRES_PASSWORD=nlmk
+
   ui:
     build: ./ui
     stdin_open: true
