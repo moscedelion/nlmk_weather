@@ -1,0 +1,26 @@
+version: '3.7'
+services:
+  database:
+    image: postgres:10.4
+    restart: always
+    container_name: database
+    volumes:
+      - ./data/weather.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./postgres-data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=nlmk
+      - POSTGRES_USER=nlmk
+      - POSTGRES_PASSWORD=nlmk
+
+  web:
+    build: ./web
+    ports:
+      - 80:5000
+  
+  ui:
+    build: ./ui
+    stdin_open: true
+volumes:
+  postgres-data:
