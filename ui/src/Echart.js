@@ -6,37 +6,85 @@ class Echart extends React.Component {
   state = {
     startDate: new Date(),
     endDate: new Date(),
-    option: {
-    xAxis: {
-        type: 'category',
-        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-    },
-    yAxis: {
-        type: 'value'
-    },
-    series: [{
-        data: [820, 932, 901, 934, 1290, 1330, 1320],
-        type: 'line',
-        smooth: true
-    },{
-        data: [850, 952, 801, 434, 1090, 1530, 1120],
-        type: 'line',
-        smooth: true
-    }]
-    },
+    option: {},
+    dates: [],
+    humidity: [],
+    pressure: [],
+    temperature: [],
   }
+
+  drawLines = () => {
+      let api_dates = [];
+      let api_humidity = [];
+      let api_pressure = [];
+      let api_temperature = [];
+    fetch('/api?start_date='+ this.state.startDate.toLocaleDateString()  +'&end_date=' + this.state.endDate.toLocaleDateString()).then(response => response.json()).then( result => {
+     result['json_list'].forEach(
+        el => {
+          api_dates.push(el['date']);
+          api_humidity.push(el['humidity']);
+          api_pressure.push(el['pressure']);
+          api_temperature.push(el['temperature']);
+        }
+      );
+     }
+    ).then(
+    e => {
+      this.updateChartData(api_dates, api_humidity, api_pressure, api_temperature)
+    }) 
+  };
+
+  updateChartData = (dates, humidity, pressure, temperature) => {
+    this.setState({
+      option:  {
+        title: {
+            text: 'новый тайтл'
+        },
+        tooltip: {
+            trigger: 'axis'
+        },
+        legend: {
+            data: ['Температура', 'Давление', 'Влажность']
+        },
+        yAxis: {
+            type: 'value'
+        },
+        xAxis: {
+            type: 'category',
+            data: dates
+        },
+        series: [{
+            name: 'Влажность',
+            type: 'line',
+            data: humidity
+        },
+        {
+            name: 'Давление',
+            type: 'line',
+            data: pressure
+        },
+        {
+            name: 'Температура',
+            type: 'line',
+            data: temperature
+        }]
+      }
+    })
+ }
 
  handleStartChange = date => {
     this.setState({
       startDate: date
     });
-  };
+    this.drawLines();
+  }
 
  handleEndChange = date => {
-    this.setState({
+   this.setState({
       endDate: date
     });
-  };
+    this.drawLines();
+  }
 
 
   render() {
@@ -49,7 +97,7 @@ class Echart extends React.Component {
         selectsStart
         startDate={this.state.startDate}
         endDate={this.state.endDate}
-        dateFormat="MM/dd/yyyy"
+        dateFormat="dd/MM/yyyy"
       />
       <DatePicker
         selected={this.state.endDate}
@@ -57,7 +105,7 @@ class Echart extends React.Component {
         selectsEnd
         startDate={this.state.startDate}
         endDate={this.state.endDate}
-        dateFormat="MM/dd/yyyy"
+        dateFormat="dd/MM/yyyy"
       />
     </>
     );

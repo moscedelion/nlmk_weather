@@ -17,7 +17,7 @@ services:
   web:
     build: ./web
     ports:
-      - 80:5000
+      - 5000:5000
     environment:
       - DB_PORT=5432
       - DB_VENDOR=postgres
@@ -28,6 +28,8 @@ services:
 
   ui:
     build: ./ui
+    ports:
+      - 80:80
     stdin_open: true
 volumes:
   postgres-data:
