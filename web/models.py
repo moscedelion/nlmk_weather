@@ -16,7 +16,7 @@ class Weather(db.Model):
       'temperature': self.temperature,
       'pressure': self.pressure,
       'humidity': self.humidity,
-      'date': self.date
+      'date': self.date.strftime('%Y-%m-%d')
     }
 
 
