@@ -4,13 +4,18 @@ import DatePicker from "react-datepicker";
 
 class Echart extends React.Component {
   state = {
-    startDate: new Date(),
+    startDate: new Date('01/01/2020'),
     endDate: new Date(),
     option: {},
     dates: [],
     humidity: [],
     pressure: [],
     temperature: [],
+  }
+
+  componentDidMount(){
+    this.drawLines();
+    console.log(this.state.startDate, this.state.endDate)
   }
 
   drawLines = () => {
@@ -38,7 +43,7 @@ class Echart extends React.Component {
     this.setState({
       option:  {
         title: {
-            text: 'новый тайтл'
+            text: 'А теперь о погоде...'
         },
         tooltip: {
             trigger: 'axis'
@@ -91,22 +96,22 @@ class Echart extends React.Component {
     return (
     <> 
       <ReactEcharts option={this.state.option}/>
-      <DatePicker
-        selected={this.state.startDate}
-        onChange={this.handleStartChange}
-        selectsStart
-        startDate={this.state.startDate}
-        endDate={this.state.endDate}
-        dateFormat="dd/MM/yyyy"
-      />
-      <DatePicker
-        selected={this.state.endDate}
-        onChange={this.handleEndChange}
-        selectsEnd
-        startDate={this.state.startDate}
-        endDate={this.state.endDate}
-        dateFormat="dd/MM/yyyy"
-      />
+      <div class='DatePickers'>
+        <DatePicker
+          selected={this.state.startDate}
+          onChange={this.handleStartChange}
+          startDate={this.state.startDate}
+          endDate={this.state.endDate}
+          dateFormat="dd/MM/yyyy"
+        />
+        <DatePicker
+          selected={this.state.endDate}
+          onChange={this.handleEndChange}
+          startDate={this.state.startDate}
+          endDate={this.state.endDate}
+          dateFormat="dd/MM/yyyy"
+        />
+      </div>
     </>
     );
   }
