@@ -22,7 +22,10 @@ class Echart extends React.Component {
       let api_humidity = [];
       let api_pressure = [];
       let api_temperature = [];
-      fetch('/api?start_date='+ this.state.startDate.toLocaleDateString()  +'&end_date=' + this.state.endDate.toLocaleDateString())
+      console.log(this.state.startDate, this.state.endDate)
+      let start_date = `${this.state.startDate.getDate()}/${this.state.startDate.getMonth() + 1}/${this.state.startDate.getFullYear()}`
+      let end_date = `${this.state.endDate.getDate()}/${this.state.endDate.getMonth() + 1}/${this.state.endDate.getFullYear()}`
+      fetch('/api?start_date=' + start_date  +'&end_date=' + end_date)
         .then(response => response.json())
         .then( result => {
           result['json_list'].forEach(
