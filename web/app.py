@@ -11,12 +11,12 @@ db.init_app(app)
 def main():
   start_arg = request.args.get('start_date')
   if start_arg:
-    start_month, start_day, start_year = [ int(x) for x in start_arg.split('/')]
+    start_day, start_month, start_year = [ int(x) for x in start_arg.split('/')]
     start_date = datetime(start_year, start_month, start_day)
  
   end_arg = request.args.get('end_date')
   if end_arg:
-    end_month, end_day, end_year = [int(x) for x in end_arg.split('/')]
+    end_day, end_month, end_year = [int(x) for x in end_arg.split('/')]
     end_date = datetime(end_year, end_month, end_day)
 
   if start_arg and end_arg:

@@ -15,7 +15,6 @@ class Echart extends React.Component {
 
   componentDidMount(){
     this.drawLines();
-    console.log(this.state.startDate, this.state.endDate)
   }
 
   drawLines = () => {
