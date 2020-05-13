@@ -6,7 +6,7 @@ class Echart extends React.Component {
   state = {
     startDate: new Date(),
     endDate: new Date(),
-    option: {},
+    option:  {},
     dates: [],
     humidity: [],
     pressure: [],
@@ -18,27 +18,29 @@ class Echart extends React.Component {
       let api_humidity = [];
       let api_pressure = [];
       let api_temperature = [];
-    fetch('/api?start_date='+ this.state.startDate.toLocaleDateString()  +'&end_date=' + this.state.endDate.toLocaleDateString()).then(response => response.json()).then( result => {
-     result['json_list'].forEach(
-        el => {
-          api_dates.push(el['date']);
-          api_humidity.push(el['humidity']);
-          api_pressure.push(el['pressure']);
-          api_temperature.push(el['temperature']);
-        }
-      );
-     }
-    ).then(
-    e => {
-      this.updateChartData(api_dates, api_humidity, api_pressure, api_temperature)
-    }) 
+      fetch('/api?start_date='+ this.state.startDate.toLocaleDateString()  +'&end_date=' + this.state.endDate.toLocaleDateString())
+        .then(response => response.json())
+        .then( result => {
+          result['json_list'].forEach(
+            el => {
+              api_dates.push(el['date']);
+              api_humidity.push(el['humidity']);
+              api_pressure.push(el['pressure']);
+              api_temperature.push(el['temperature']);
+            }
+          );
+         }
+        )
+        .then( e => {
+          this.updateChartData(api_dates, api_humidity, api_pressure, api_temperature)
+        }) 
   };
 
   updateChartData = (dates, humidity, pressure, temperature) => {
     this.setState({
       option:  {
         title: {
-            text: 'новый тайтл'
+            text: 'А теперь о погоде...'
         },
         tooltip: {
             trigger: 'axis'
